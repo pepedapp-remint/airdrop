@@ -1,8 +1,4 @@
-# decode function from tx input using contract!
-# 1. [DONE] set up w3 w/infura
-# 2. [DONE] load contract in with ABI found in PepeCore.json
-# 3. [DONE] try decoding a function call from transactions.csv
-# 4. simulate txes in order for drop!
+import csv
 import json
 
 from web3 import Web3
@@ -16,4 +12,19 @@ with open('PepeCore.json') as f:
     pepe_core_abi = pepe_core_data['abi']
 pepe_core = w3.eth.contract(address=PEPE_CORE_ADDRESS, abi=pepe_core_abi)
 
-TRANSACTIONS_FILE = 'data/transactions.csv'
+
+def load_tx_rows():
+    # pickled in tx_rows.p
+    tx_rows = []
+    with open('data/transactions.csv') as f:
+        f.readline()
+        reader = csv.reader(f)
+        for row in reader:
+            to_address = row[3]
+            fn_call = pepe_core.decode_function_input(row[4])
+            fn_name = fn_call[0].fn_name
+            fn_args = fn_call[1]
+            tx_rows.append((to_address, fn_name, fn_args))
+    return tx_rows
+
+# TODO: load tx_rows.p and simulate!

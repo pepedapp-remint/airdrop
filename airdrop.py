@@ -97,15 +97,3 @@ def process_transfer(state: PepeState, transfer: Transfer) -> PepeState:
     ret.ownership[transfer.to_addr][transfer.sig] += transfer.count
 
     return ret
-
-# State =
-# sales: sig -> list of (price, seller)
-# owner -> sig -> count
-
-# TODO: load tx_rows.p and simulate! Note that I'm only going over *successful* txes here
-# Should seed ownership map with root owner owning all cards
-# Methods to simulate:
-# - createSale(sig, price)
-# - removeSale(sig)
-# - buy(sig)
-# - transferSig(sig)

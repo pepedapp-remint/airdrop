@@ -3,6 +3,7 @@ import csv
 import json
 from typing import NamedTuple, Dict, List
 
+from Crypto.Hash import keccak
 from web3 import Web3
 
 INFURA_URI = 'https://mainnet.infura.io/v3/46e1129337704902bc55c7b1f3315a72'
@@ -97,3 +98,14 @@ def process_transfer(state: PepeState, transfer: Transfer) -> PepeState:
     ret.ownership[transfer.to_addr][transfer.sig] += transfer.count
 
     return ret
+
+
+def hash_leaf(t) -> bytes:
+    idx, sig, acct, count = t
+    hb = Web3.solidityKeccak(['uint256', 'string', 'address', 'uint256'], [idx, sig, acct, count])
+    return bytes(hb)
+
+
+def combine_nodes(n1: bytes, n2: bytes) -> bytes:
+    hb = Web3.solidityKeccak(['bytes32', 'bytes32'], [n1, n2])
+    return bytes(hb)

@@ -6,7 +6,7 @@ from web3 import Web3
 
 def hash_leaf(t) -> bytes:
     idx, sig, acct, count = t
-    hb = Web3.solidityKeccak(['uint256', 'string', 'address', 'uint256'], [idx, sig, acct, count])
+    hb = Web3.solidityKeccak(['uint256', 'bytes32', 'address', 'uint256'], [int(idx), sig, acct, int(count)])
     return bytes(hb)
 
 

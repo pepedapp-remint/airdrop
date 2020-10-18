@@ -3,6 +3,8 @@ import csv
 import json
 from typing import NamedTuple, Dict, List
 
+from web3 import Web3
+
 INFURA_URI = 'https://mainnet.infura.io/v3/46e1129337704902bc55c7b1f3315a72'
 w3 = Web3(Web3.HTTPProvider(INFURA_URI))
 

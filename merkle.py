@@ -40,12 +40,12 @@ class MerkleTree(NamedTuple):
     leaf_to_branch: Dict[bytes, List[bytes]]
 
     def jsonify(self):
-        hex_root = self.root.hex()
+        hex_root = '0x' + self.root.hex()
 
         hex_ltb = {}
         for leaf, branch in self.leaf_to_branch.items():
-            hex_branch = [b.hex() for b in branch]
-            hex_ltb[leaf.hex()] = hex_branch
+            hex_branch = ['0x' + b.hex() for b in branch]
+            hex_ltb['0x' + leaf.hex()] = hex_branch
 
         return {
             'root': hex_root,
